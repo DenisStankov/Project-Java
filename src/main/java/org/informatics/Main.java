@@ -24,12 +24,13 @@ public class Main {
         employee.setSalary(1300);
         Publication.setMaxPaperSheets(100);
         manager.setPercentageIncrease(5);
-        printingShop.setExpectedIncome(3500);
+        printingShop.setExpectedIncome(1500);
         publication1.setDiscount(2.3);
         publication1.setCountDiscount(55);
 
         System.out.println(printingShop.salaryExpenses());
         System.out.println(printingShop.paperExpenses());
+        System.out.println(printingShop.getIncome());
 
         try {
             publication1.checkPaperLoad();
@@ -52,8 +53,8 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        String fileName = "income_expenses_publications.txt";
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName)))
+        printingShop.writeToFile("printing_data.txt");
+
 
     }
 }

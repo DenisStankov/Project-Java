@@ -1,0 +1,8 @@
+Income: 1732.384
+Paper expenses: 1709.9
+Salary expenses: 2665.0
+Publications:
+Romeo and Juliette, 50
+Game of Thrones, 80
+24 Chasa, 120
+Forbes, 60

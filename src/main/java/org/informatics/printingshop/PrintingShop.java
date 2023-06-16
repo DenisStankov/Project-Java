@@ -2,8 +2,15 @@ package org.informatics.printingshop;
 
 import org.informatics.employees.Manager;
 import org.informatics.employees.OperatorOfMachine;
+import org.informatics.publication.MachineType;
 import org.informatics.publication.Publication;
+import org.informatics.publication.PublicationType;
 
+import javax.crypto.Mac;
+import java.awt.print.Book;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +46,23 @@ public class PrintingShop {
     }
 
     public double getIncome() {
-        return income;
+        double income = 0.0;
+
+
+        for(Publication publication : publications){
+            MachineType machineType = publication.getMachineType();
+            income += (publication.priceOfPaper() * publication.getCount());
+            if(publication.getCount() > publication.getCountDiscount()) {
+                income += income * publication.getDiscount() / 100;
+            }
+            if(machineType == MachineType.COLORFUL){
+                income *= 1.5;
+            }
+            else if(machineType == MachineType.COLORLESS){
+                income *= 1.2;
+            }
+        }
+        return income - paperExpenses();
     }
 
 
@@ -61,10 +84,25 @@ public class PrintingShop {
 
         for(Publication publication : publications){
             paperCosts += (publication.priceOfPaper() * publication.getCount());
-            if(publication.getCount() > publication.getCountDiscount()) {
-                paperCosts += paperCosts * publication.getDiscount() / 100;
-            }
+
         }
         return paperCosts;
+    }
+
+    public void writeToFile(String filename) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
+
+            writer.println("Income: " + getIncome());
+            writer.println("Paper expenses: " + paperExpenses());
+            writer.println("Salary expenses: " + salaryExpenses());
+
+            writer.println("Publications:");
+            for (Publication publication : publications) {
+                writer.println(publication.getTitle() + ", " + publication.getCount());
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

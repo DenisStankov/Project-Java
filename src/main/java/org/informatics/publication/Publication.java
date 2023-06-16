@@ -26,6 +26,10 @@ public class Publication {
         printingShop.addPublication(this);
     }
 
+    public MachineType getMachineType() {
+        return machineType;
+    }
+
     public String getTitle() {
         return title;
     }
